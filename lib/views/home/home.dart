@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import '../public/mytextfield.dart';
-
+import '../../public/mytextfield.dart';
+import '../home/htitle.dart';
 class Homeview extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     // 首页内容
-    return Center(
+    return Container(
       child: Column(
         // Column is also layout widget. It takes a list of children and
         // arranges them vertically. By default, it sizes itself to fit its
@@ -83,6 +82,13 @@ class Homeview extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          Container(
+            child: Column(
+              children: <Widget>[
+                Htitle(title: "热门课程",)
+              ],
+            )
           )
         ],
       ),

@@ -1,8 +1,6 @@
 <<<<<<< HEAD
 # cmpapp
-flutter
 =======
-# mcrup
 
 A new Flutter project.
 
