@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../public/mytextfield.dart';
 import '../home/htitle.dart';
+import './courseItem.dart';
 class Homeview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -84,9 +85,11 @@ class Homeview extends StatelessWidget {
             ),
           ),
           Container(
+            color: Color.fromARGB(255, 244, 244, 244),
             child: Column(
               children: <Widget>[
-                Htitle(title: "热门课程",)
+                Htitle(title: "热门课程"),
+                CourseItem()
               ],
             )
           )
