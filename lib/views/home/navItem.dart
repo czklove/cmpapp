@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class NavItem extends StatelessWidget  {
 
-  NavItem({Key key, this.title, this.imgrurl}) : super(key: key);
+  NavItem({Key key, this.title, this.imgrurl, this.urlname}) : super(key: key);
 
   final String imgrurl;
   final String title;
-
+  final String urlname;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -21,7 +21,7 @@ class NavItem extends StatelessWidget  {
               ),
             ),
             onPressed: () => {
-              print("点击了nav导航栏")
+              Navigator.of(context).pushNamed("case", arguments: "hi")
             },
           ),
           Text(

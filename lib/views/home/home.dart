@@ -28,12 +28,6 @@ class Homeview extends StatelessWidget {
         // horizontal).
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            child: Container(
-              child: Mytextfiled(),
-            ),
-            padding: new EdgeInsets.all(20),
-          ),
           Container(
             padding: new EdgeInsets.fromLTRB(0, 0, 0, 20),
             child: new Image.network(
