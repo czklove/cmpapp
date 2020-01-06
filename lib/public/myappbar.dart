@@ -10,7 +10,7 @@ class Myappbar extends StatelessWidget implements PreferredSizeWidget {
     // TODO: implement build
     return PreferredSize(
       child: Container(
-        padding: new EdgeInsets.fromLTRB(0, 10, 0, 0),
+        padding: new EdgeInsets.fromLTRB(0, 13, 0, 0),
         color: Color.fromARGB(255, 68, 76, 87),
         child: AppBar(
       // Here we take the value from the MyHomePage object that was created by

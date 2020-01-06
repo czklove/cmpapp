@@ -11,8 +11,7 @@ class CourseItem extends StatelessWidget {
       padding: new EdgeInsets.fromLTRB(12, 5, 12, 0),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusDirectional.circular(8),
-          
+          borderRadius: BorderRadiusDirectional.circular(8),          
         ),
         elevation: 0.5,
         clipBehavior: Clip.antiAlias,

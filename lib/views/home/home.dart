@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import '../../public/mytextfield.dart';
 import '../home/htitle.dart';
 import './courseItem.dart';
+import './authorItem.dart';
+import './questionItem.dart';
+import './navItem.dart';
+
 class Homeview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -44,20 +48,20 @@ class Homeview extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       flex: 1,
-                      child: Container(height: 90, child: Text('data1'),color: Colors.red,),
+                      child: Container(height: 100, child: NavItem(title: "公开课",imgrurl: "images/01.gif",)),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(height: 90,child: Text('data2'),color: Colors.blue,),
+                      child: Container(height: 100, child: NavItem(title: "直播课",imgrurl: "images/02.gif",)),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(height: 90,child: Text('data3'),color: Colors.white,),
+                      child: Container(height: 100, child: NavItem(title: "答疑课",imgrurl: "images/03.gif",)),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(height: 90,child: Text('data4'),color: Colors.pink,)
-                    )  
+                      child: Container(height: 100, child: NavItem(title: "知识问答",imgrurl: "images/04.gif",)),
+                    ) 
                   ],
                 ),
                 Flex(
@@ -65,19 +69,19 @@ class Homeview extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       flex: 1,
-                      child: Container(height: 90,child: Text('data1'),color: Colors.red,),
+                      child: Container(height: 100, child: NavItem(title: "案例库",imgrurl: "images/05.gif",)),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(height: 90,child: Text('data2'),color: Colors.blue,),
+                      child: Container(height: 100, child: NavItem(title: "资料库",imgrurl: "images/06.gif",)),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(height: 90,child: Text('data3'),color: Colors.white,),
+                      child: Container(height: 100, child: NavItem(title: "车友圈",imgrurl: "images/07.gif",)),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(height: 90,child: Text('data4'),color: Colors.pink,)
+                      child: Container(height: 100, child: NavItem(title: "汽修导航",imgrurl: "images/08.gif",)),
                     )  
                   ],
                 ),
@@ -92,8 +96,45 @@ class Homeview extends StatelessWidget {
                 CourseItem(),
                 CourseItem(),
                 Htitle(title: "大咖名师"),
-                
-                Htitle(title: "精品回答")
+                Padding(
+                  child:Flex(
+                    direction: Axis.horizontal,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          child: AuthorItem(),
+                          padding: new EdgeInsets.fromLTRB(8, 0, 8, 0),
+                        ) 
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          child: AuthorItem(),
+                          padding: new EdgeInsets.fromLTRB(8, 0, 8, 0),
+                        ) 
+                      )
+                    ],
+                  ),
+                  padding: new EdgeInsets.fromLTRB(10, 0, 10, 0),
+                ),
+                Htitle(title: "精品回答"),
+                Padding(
+                  padding: new EdgeInsets.fromLTRB(12, 5, 12, 10),
+                  child:Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusDirectional.circular(8), 
+                    ),
+                    elevation: 0,
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      children: <Widget>[
+                        QuestionItem(),
+                        QuestionItem(),
+                      ],
+                    ),
+                  )
+                )
               ],
             )
           )
