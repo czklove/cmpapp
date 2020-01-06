@@ -89,7 +89,11 @@ class Homeview extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Htitle(title: "热门课程"),
-                CourseItem()
+                CourseItem(),
+                CourseItem(),
+                Htitle(title: "大咖名师"),
+                
+                Htitle(title: "精品回答")
               ],
             )
           )
