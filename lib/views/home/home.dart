@@ -54,7 +54,7 @@ class Homeview extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(height: 100, child: NavItem(title: "知识问答",imgrurl: "images/04.gif",)),
+                      child: Container(height: 100, child: NavItem(title: "知识问答",imgrurl: "images/04.gif", urlname: 'question')),
                     ) 
                   ],
                 ),
@@ -63,7 +63,7 @@ class Homeview extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       flex: 1,
-                      child: Container(height: 100, child: NavItem(title: "案例库",imgrurl: "images/05.gif",)),
+                      child: Container(height: 100, child: NavItem(title: "案例库",imgrurl: "images/05.gif", urlname: 'case')),
                     ),
                     Expanded(
                       flex: 1,
@@ -71,7 +71,7 @@ class Homeview extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 1,
-                      child: Container(height: 100, child: NavItem(title: "车友圈",imgrurl: "images/07.gif",)),
+                      child: Container(height: 100, child: NavItem(title: "车友圈",imgrurl: "images/07.gif", urlname: 'ring')),
                     ),
                     Expanded(
                       flex: 1,

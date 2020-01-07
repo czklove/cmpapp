@@ -3,6 +3,12 @@ import './public/myappbar.dart';
 import './public/mytextfield.dart';
 import './views/home/home.dart';
 import './views/case/index.dart';
+import './views/course/index.dart';
+import './views/question/index.dart';
+import './views/ring/index.dart';
+import './router/index.dart';
+import './router/config.dart';
+import './views/error.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,17 +29,13 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           backgroundColor: Color.fromARGB(255, 244, 244, 244)),
-      home: MyHomePage(title: '汽修帮',nameurl: 'home'),
-      routes: {
-        '/home': (BuildContext context) => MyHomePage(title: '汽修帮',nameurl: 'home'),
-        'case': (BuildContext context) => MyHomePage(title: '案列库',nameurl: 'case')
-      },
+      home: MyHomePage(title: '汽修帮',nameurl: 'home', selectedIndex: 0),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title,this.nameurl}) : super(key: key);
+  MyHomePage({Key key, this.title,this.nameurl,this.selectedIndex}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -46,20 +48,20 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
   final String nameurl;
+  final int selectedIndex;
   @override
-  _MyHomePageState createState() => _MyHomePageState(nameurl: nameurl);
+  _MyHomePageState createState() => _MyHomePageState(nameurl: nameurl,selectedIndex: selectedIndex);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  _MyHomePageState({this.nameurl});
+  _MyHomePageState({this.nameurl,this.selectedIndex});
 
   String nameurl = "home";
-  int _selectedIndex = 0;
-  Widget homeview = null;
+  int selectedIndex = 0;
+  Widget homeview;
   @override
-  Widget build(BuildContext context) {
-      
+  Widget build(BuildContext context) {      
     switch (nameurl) {
       case "home":
           homeview = Homeview();
@@ -67,7 +69,21 @@ class _MyHomePageState extends State<MyHomePage> {
       case "case":
           homeview = CaseView();
         break;
+      case "course":
+          homeview = CourseView();
+        break;
+      case "question":
+          homeview = QuestionView();
+        break;
+      case "ring":
+          homeview = RingView();
+        break;
+      case "error":
+          homeview = ErrorView();
+        break;
       default:
+          homeview = ErrorView();
+        break;
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -106,20 +122,39 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.home), title: Text("首页")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.book), title: Text("图书")),
+              icon: Icon(Icons.bookmark_border), title: Text("课程")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.all_out), title: Text("新闻")),
+              icon: Icon(Icons.shopping_cart), title: Text("商城")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), title: Text("个人中心"))
+              icon: Icon(Icons.account_circle), title: Text("我的"))
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: selectedIndex,
         fixedColor: Color.fromARGB(255, 40, 183, 163),
         onTap: _onItemTapped));
   }
   void _onItemTapped(int index) {
     setState(() {
       print(nameurl);
-      _selectedIndex = index;
+      selectedIndex = index;
+      String urlname = "";
+      switch (index) {
+        case 0:
+          urlname="home";
+          break;
+        case 1:
+          urlname="course";
+          break;
+        case 2:
+          urlname="shopcar";
+          break;
+        case 3:
+          urlname="usercenter";
+          break;
+        default:
+      }
+      Navigator.of(context).push(CustomRoute(
+        getRoute(urlname)
+      ));
     });
   }
 }

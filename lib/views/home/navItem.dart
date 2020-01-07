@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './../../router/index.dart';
+import './../../router/config.dart';
 
 class NavItem extends StatelessWidget  {
 
@@ -21,7 +23,9 @@ class NavItem extends StatelessWidget  {
               ),
             ),
             onPressed: () => {
-              Navigator.of(context).pushNamed("case", arguments: "hi")
+              Navigator.of(context).push(CustomRoute(
+                getRoute(urlname)
+              ))
             },
           ),
           Text(

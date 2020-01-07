@@ -53,6 +53,20 @@ flutter:
     - images/06.gif
     - images/07.gif
     - images/08.gif
+    - images/02_03.gif
+    - images/02_05.gif
+    - images/02_07.gif
+    - images/02_09.gif
+    - images/02_11.gif
+    - images/02_18.gif
+    - images/02_19.gif
+    - images/02_20.gif
+    - images/02_21.gif
+    - images/02_22.gif
+    - images/05_03.gif
+    - images/05_05.gif
+    - images/05_07.gif
+    - images/06_02.gif
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
