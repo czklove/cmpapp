@@ -12,7 +12,7 @@ class CaseView extends StatelessWidget {
      * @return: 
      * @author: czklove
      */    
-    // TODO: implement build
+    // 
     return Container(
       child: Column(
         children: <Widget>[

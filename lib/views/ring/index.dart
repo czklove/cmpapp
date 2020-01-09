@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../home/navItem.dart';
 import './listitem.dart';
 
 class RingView extends StatelessWidget {
@@ -12,7 +11,7 @@ class RingView extends StatelessWidget {
      * @return: 
      * @author: czklove
      */    
-    // TODO: implement build
+    //
     return Container(
       child: Column(
         children: <Widget>[

@@ -38,13 +38,13 @@ class CustomRoute extends PageRouteBuilder{
       ); */
       
       // 缩放动画效果
-       return ScaleTransition(
+       /* return ScaleTransition(
          scale: Tween(begin: 0.0,end: 1.0).animate(CurvedAnimation(
            parent: animaton1,
            curve: Curves.fastOutSlowIn
          )),
          child: child,
-       );
+       ); */
 
       // 旋转加缩放动画效果
       // return RotationTransition(
@@ -64,7 +64,7 @@ class CustomRoute extends PageRouteBuilder{
       // );
 
       // 左右滑动动画效果
-      /* eturn SlideTransition(
+      return SlideTransition(
         position: Tween<Offset>(
           // 设置滑动的 X , Y 轴
           begin: Offset(1.0, 0.0),
@@ -74,7 +74,7 @@ class CustomRoute extends PageRouteBuilder{
           curve: Curves.fastOutSlowIn
         )),
         child: child,
-      ); */
+      );
     }
   );
 }

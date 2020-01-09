@@ -8,7 +8,7 @@ class CardImg extends StatelessWidget  {
   final double radius;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    // 
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.circular(radius), 

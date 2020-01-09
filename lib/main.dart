@@ -6,9 +6,10 @@ import './views/case/index.dart';
 import './views/course/index.dart';
 import './views/question/index.dart';
 import './views/ring/index.dart';
+import './views/error.dart';
+import './views/animation/index.dart';
 import './router/index.dart';
 import './router/config.dart';
-import './views/error.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,16 +51,45 @@ class MyHomePage extends StatefulWidget {
   final String nameurl;
   final int selectedIndex;
   @override
-  _MyHomePageState createState() => _MyHomePageState(nameurl: nameurl,selectedIndex: selectedIndex);
+  _MyHomePageState createState() => _MyHomePageState(nameurl: nameurl,selectedIndex: selectedIndex,title: title);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  _MyHomePageState({this.nameurl,this.selectedIndex});
+  // app 退出提示
+  Future<bool> _onBackPressed() {
+      if(ModalRoute.of(context).isFirst) {
+        return showDialog(
+        context: context,
+        builder: (context) =>
+          AlertDialog(
+            title: Text('确定退出程序吗?'),
+            actions: <Widget>[
+              FlatButton(
+                  child: Text('暂不'),
+                  onPressed: () => Navigator.pop(context, false),
+              ),
+              FlatButton(
+                  child: Text('确定'),
+                  onPressed: () => Navigator.pop(context, true),
+              ),
+            ],
+          )
+        );
+      } else {
+        Navigator.of(context).pop();
+      }
+  }
+  _MyHomePageState({this.nameurl,this.selectedIndex,this.title});
 
   String nameurl = "home";
+  String title = "汽修帮";
   int selectedIndex = 0;
   Widget homeview;
+  /* 页面滚动 */
+  ScrollController scrollController = ScrollController();
+  void _scrollToend() {
+    scrollController.jumpTo(scrollController.position.minScrollExtent);
+  }
   @override
   Widget build(BuildContext context) {      
     switch (nameurl) {
@@ -85,36 +115,37 @@ class _MyHomePageState extends State<MyHomePage> {
           homeview = ErrorView();
         break;
     }
+    // 更新widget 页面回滚到顶部
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: Myappbar(title: widget.title),
-      body: new SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              child: Container(
-                child: Mytextfiled(),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        appBar: Myappbar(title: title),
+        body: SingleChildScrollView(
+          child:Column(
+            children: <Widget>[
+              Padding(
+                child: Container(
+                  child: Mytextfiled(),
+                ),
+                padding: new EdgeInsets.all(20),
               ),
-              padding: new EdgeInsets.all(20),
-            ),
-            homeview
-          ],
-        )
-      ),
-      /* floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: ()=>{
-          setState((){
-            _counter++;
-          })
-        },
-      ), */
-      bottomNavigationBar: BottomNavigationBar(
+              AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                var tween=Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
+                //执行缩放动画
+                return MySlideTransition(child: child, position: tween.animate(animation));
+              },
+              child:homeview)
+            ])
+        ),
+        bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.grey,
         backgroundColor: Colors.white,
@@ -130,31 +161,46 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         currentIndex: selectedIndex,
         fixedColor: Color.fromARGB(255, 40, 183, 163),
-        onTap: _onItemTapped));
-  }
-  void _onItemTapped(int index) {
+        onTap: _onItemTapped))
+        );
+      }
+      void _onItemTapped(int index) {
     setState(() {
       print(nameurl);
       selectedIndex = index;
       String urlname = "";
+      String title = "";
       switch (index) {
         case 0:
           urlname="home";
+          title="汽修帮";
           break;
         case 1:
           urlname="course";
+          title="课程";
           break;
         case 2:
           urlname="shopcar";
+          title="商城";
           break;
         case 3:
           urlname="usercenter";
           break;
         default:
       }
-      Navigator.of(context).push(CustomRoute(
-        getRoute(urlname)
-      ));
+      if(index != 3)
+      {
+        setState((){
+          this.nameurl = urlname;
+          this.title = title;
+        });
+      } else {
+          Navigator.of(context).push(CustomRoute(
+          getRoute(urlname)
+        )); 
+      }
     });
   }
 }
+
+
