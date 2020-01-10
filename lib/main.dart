@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import './public/myappbar.dart';
-import './public/mytextfield.dart';
 import './views/home/home.dart';
 import './views/case/index.dart';
 import './views/course/index.dart';
@@ -125,25 +124,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
-        appBar: Myappbar(title: title),
-        body: SingleChildScrollView(
-          child:Column(
-            children: <Widget>[
-              Padding(
-                child: Container(
-                  child: Mytextfiled(),
-                ),
-                padding: new EdgeInsets.all(20),
-              ),
-              AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                var tween=Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
-                //执行缩放动画
-                return MySlideTransition(child: child, position: tween.animate(animation));
-              },
-              child:homeview)
-            ])
+        appBar: Myappbar(title: title, isneedsearch: true),
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            var tween=Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
+            //执行缩放动画
+            return MySlideTransition(child: child, position: tween.animate(animation));
+          },
+          child: homeview
         ),
         bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

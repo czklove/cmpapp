@@ -5,6 +5,8 @@ import './courselist.dart';
 import '../../api/Search.dart';
 import './model.dart';
 import 'package:toast/toast.dart';
+import '../../public/loading.dart';
+import 'dart:ui';
 
 class CourseView extends StatelessWidget {
   @override
@@ -16,43 +18,41 @@ class CourseView extends StatelessWidget {
      * @author: czklove
      */    
     //
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: new EdgeInsets.fromLTRB(0, 0, 0, 20),
-            child: Container(
-              height: 10,
-              color: Color.fromARGB(255, 244, 244, 244),
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: new EdgeInsets.fromLTRB(0, 0, 0, 20),
+          child: Container(
+            height: 10,
+            color: Color.fromARGB(255, 244, 244, 244),
+          ),
+        ),
+        Flex(
+          direction: Axis.horizontal,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Container(height: 100, child: NavItem(title: "公开课",imgrurl: "images/01.gif",)),
             ),
-          ),
-          Flex(
-            direction: Axis.horizontal,
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Container(height: 100, child: NavItem(title: "公开课",imgrurl: "images/01.gif",)),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(height: 100, child: NavItem(title: "直播课",imgrurl: "images/02.gif",)),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(height: 100, child: NavItem(title: "答疑课",imgrurl: "images/03.gif",)),
-              ),
-            ],
-          ),
-          Padding(
-            padding: new EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Container(
-              height: 10,
-              color: Color.fromARGB(255, 244, 244, 244),
+            Expanded(
+              flex: 1,
+              child: Container(height: 100, child: NavItem(title: "直播课",imgrurl: "images/02.gif",)),
             ),
+            Expanded(
+              flex: 1,
+              child: Container(height: 100, child: NavItem(title: "答疑课",imgrurl: "images/03.gif",)),
+            ),
+          ],
+        ),
+        Padding(
+          padding: new EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Container(
+            height: 10,
+            color: Color.fromARGB(255, 244, 244, 244),
           ),
-          Listwidgets(),
-        ],
-      )
+        ),
+        Listwidgets()
+      ] 
     );
   }
 }
@@ -65,16 +65,13 @@ class Listwidgets extends StatefulWidget {
 class _PageState extends State<Listwidgets> {
 
   _PageState() {
-    Future.delayed(Duration(seconds: 1), (){
+    Future.delayed(Duration(seconds: 3), (){
         getList("7",1,10);
     });
   }
   List<Widget> listmap = [
-    Center(
-      child: Text("加载中......"),
-    ),
     Container(
-      child: Text("无数据"),
+      child: Loading(),
     )
   ];
   // 的到list
@@ -107,10 +104,12 @@ class _PageState extends State<Listwidgets> {
     setState(() {
       listlength = newlistmap.length;
       listmap = newlistmap;
+      _listheight = 900.0;
     });
   }
   
-  var listlength = 2;
+  var listlength = 1;
+  double _listheight = 0.0;
   ScrollController _controller = new ScrollController();
   bool showToadd = false; //是否显示“加载组件”按钮
 
@@ -119,7 +118,7 @@ class _PageState extends State<Listwidgets> {
   void initState() {
     super.initState();
     _controller.addListener((){
-      print(_controller.offset); //打印滚动位置
+      //print(_controller.offset); //打印滚动位置
     });
   }
   // 防止内存泄漏，掉用_controller.dispose
@@ -130,30 +129,46 @@ class _PageState extends State<Listwidgets> {
   }
   Future onRefresh () {
     return Future.delayed(Duration(seconds: 1), () {
-      Toast.show('当前已是最新数据', context);
+      // Toast.show('当前已是最新数据', context);
     });
   }
   @override
   Widget build(BuildContext context) {
-    //
-    return RefreshIndicator(
-      onRefresh: this.onRefresh,
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 900.0,
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: ListView.builder(
-              // physics : BouncingScrollPhysics(),
-              itemCount: listlength,
-              controller: _controller,
-              itemBuilder: (context,index) {
-                return listmap[index];
-              },
+    Size mSize = MediaQuery.of(context).size;// 获取当前屏幕的宽高
+    _listheight = mSize.height - 384.1;
+    print(_listheight);
+    return NotificationListener<ScrollEndNotification>(
+      onNotification: (notification) {
+        print(notification.toString());
+        print(notification.metrics.axisDirection.toString()+","+notification.metrics.pixels.toString()+","+notification.metrics.maxScrollExtent.toString());
+        if(notification.depth !=0) return false;
+        if(notification.metrics.axisDirection != AxisDirection.down) return false;
+        if(notification.metrics.pixels <= notification.metrics.maxScrollExtent) return false;
+        print(2222);
+        return false;
+      },
+      child:SingleChildScrollView(
+        child: RefreshIndicator(
+          onRefresh: this.onRefresh,
+          child: Column(
+            children: [
+              Container(
+                height: _listheight,
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: listlength,
+                  controller: _controller,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context,index) {
+                    return listmap[index];
+                  },
+                )
+              ),
+              !showToadd ? Container() : Text("数据正在加载中")
+              ]
             )
-          ),
-          !showToadd ? Container() : Text("数据正在加载中")
-        ],
+        ),
       ) 
     );
   }
